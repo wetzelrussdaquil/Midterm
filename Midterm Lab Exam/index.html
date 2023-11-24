@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Me</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 50px;
+            background-color: #f5f5f5;
+            background: url('pic.jpg')no-repeat;
+            background-position: center;
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+
+        }
+            height: 100vh; 
+            margin: 0;
+           
+    </style>
+</head>
+<body>
+    <h1>Guess Me</h1>
+    <p>Guess a number between 1 and 10:</p>
+    <input type="number" id="guessInput">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <button onclick="retryGame()" id="retryButton" disabled>Retry</button>
+    <button onclick="logout()" id="logoutButton">Log Out</button>
+    <p id="message"></p>
+
+    <script>
+        const maxAttempts = 3;
+        const secretNumber = Math.floor(Math.random() * 10) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            attempts++;
+
+            const messageElement = document.getElementById('message');
+            const retryButton = document.getElementById('retryButton');
+
+            if (userGuess === secretNumber) {
+                messageElement.innerHTML = `Congratulations! You guessed the number ${secretNumber} in ${attempts} attempts.`;
+                messageElement.style.color = 'green';
+                retryButton.disabled = false; 
+            } else if (userGuess < secretNumber) {
+                messageElement.innerHTML = 'Too low. Try again.';
+                messageElement.style.color = 'red';
+            } else {
+                messageElement.innerHTML = 'Too high. Try again.';
+                messageElement.style.color = 'red';
+            }
+
+            if (attempts >= maxAttempts) {
+                retryButton.disabled = false;
+            }
+        }
+
+        function retryGame() {
+            document.getElementById('guessInput').value = '';
+            document.getElementById('message').innerHTML = '';
+            document.getElementById('retryButton').disabled = true;
+            attempts = 0;
+            secretNumber = Math.floor(Math.random() * 10) + 1;
+        }
+        function logout() {
+            
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>
